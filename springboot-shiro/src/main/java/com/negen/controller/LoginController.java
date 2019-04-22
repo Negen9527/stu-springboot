@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
     @Autowired
     private ILoginService loginService;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam("name")String name,
-                        @RequestParam("password")String password){
+    public String login(@RequestParam("name") String name,
+                        @RequestParam("password") String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
                 name,
@@ -25,7 +26,7 @@ public class LoginController {
         );
         try {
             subject.login(usernamePasswordToken);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("========>登陆失败");
         }
         return "redirect:/html/index.html";

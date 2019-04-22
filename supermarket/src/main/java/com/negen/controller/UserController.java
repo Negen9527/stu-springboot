@@ -19,36 +19,36 @@ public class UserController {
     UserRepository userRepository;
 
     @RequestMapping(value = "list")
-    public String listAllUser(ModelMap map){
+    public String listAllUser(ModelMap map) {
         List<User> users = userRepository.findAll();
-        map.addAttribute("users",users);
+        map.addAttribute("users", users);
         return "userList";
     }
 
     @Transactional
     @RequestMapping(value = "delete")
-    public String deleteUser(ModelMap map, HttpServletRequest request){
+    public String deleteUser(ModelMap map, HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        boolean deleteResult = userRepository.deleteUserById(id)==1?true:false;
-        if(deleteResult){
+        boolean deleteResult = userRepository.deleteUserById(id) == 1 ? true : false;
+        if (deleteResult) {
             return "redirect:list";
-        }else{
+        } else {
             map.addAttribute("result", "删除失败");
             return "result";
         }
     }
 
     @RequestMapping(value = "modify")
-    public String modifyUser(ModelMap map, HttpServletRequest request){
+    public String modifyUser(ModelMap map, HttpServletRequest request) {
         int id;
         String userName;
         String userPass;
         id = Integer.parseInt(request.getParameter("id"));
-        if("" == request.getParameter("userName")){
+        if ("" == request.getParameter("userName")) {
             User oldUser = userRepository.findUserById(id);
             map.addAttribute("user", oldUser);
             return "modifyUser";
-        }else{
+        } else {
             userName = request.getParameter("userName");
             userPass = request.getParameter("userPass");
             User oldUser = userRepository.findUserById(id);

@@ -16,7 +16,7 @@ public class RegisterController {
     RegisterRepository registerRepository;
 
     @RequestMapping(value = "register")
-    public String register(ModelMap map, HttpServletRequest request){
+    public String register(ModelMap map, HttpServletRequest request) {
         String userName = request.getParameter("userName");
         String userPass = request.getParameter("userPass");
         User newUser = new User();
@@ -24,7 +24,7 @@ public class RegisterController {
         newUser.setUserPass(userPass);
         User u = registerRepository.save(newUser);
         System.out.println("user:" + u.toString());
-        map.addAttribute("result","注册成功");
+        map.addAttribute("result", "注册成功");
         return "result";
     }
 }

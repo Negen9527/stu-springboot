@@ -3,8 +3,8 @@ package com.stu.config;
 
 /**
  * Created by Administrator on 2017/8/11.
- *
- *
+ * <p>
+ * <p>
  * 数据源2
  */
 
@@ -27,20 +27,22 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef="entityManagerFactorySecondary",
-        transactionManagerRef="transactionManagerSecondary",
-        basePackages= { "com.stu.repository" }) //设置Repository所在位置
+        entityManagerFactoryRef = "entityManagerFactorySecondary",
+        transactionManagerRef = "transactionManagerSecondary",
+        basePackages = {"com.stu.repository"}) //设置Repository所在位置
 public class SecondaryConfig {
 
     @Autowired
     @Qualifier("secondaryDataSource")
     private DataSource secondaryDataSource;
+
     @Bean(name = "entityManagerSecondary")
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
         return entityManagerFactorySecondary(builder).getObject().createEntityManager();
     }
+
     @Bean(name = "entityManagerFactorySecondary")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary (EntityManagerFactoryBuilder builder) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary(EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(secondaryDataSource)
                 .properties(getVendorProperties(secondaryDataSource))
@@ -48,13 +50,16 @@ public class SecondaryConfig {
                 .persistenceUnit("secondaryPersistenceUnit")
                 .build();
     }
+
     @Autowired
     private JpaProperties jpaProperties;
+
     private Map getVendorProperties(DataSource dataSource) {
 //        return jpaProperties.getHibernateProperties(dataSource);
 
         return jpaProperties.getProperties();
     }
+
     @Bean(name = "transactionManagerSecondary")
     PlatformTransactionManager transactionManagerSecondary(EntityManagerFactoryBuilder builder) {
         return new JpaTransactionManager(entityManagerFactorySecondary(builder).getObject());

@@ -19,7 +19,7 @@ public class Role {
     private String roleName;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "role")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private List<Permission> permissions;
 
 }
